@@ -1,0 +1,6 @@
+mapping_set_id: https://ddi-gothenburg-23.hacktathon/ddi25-dmp-mapping/v001
+license: https://creativecommons.org/licenses/by/4.0/
+mapping_set_version: "2023-03-24"
+mapping_set_description: 'Draft: Manually created mapping between maDMP standard from RDA to DDI Codebook 2.5, using "perverted" sssom mapping standard'
+object_source: https://ddialliance.org/Specification/DDI-Codebook/2.5/XMLSchema/codebook.xsd
+subject_source: https://semantics.id/dcso/ns/core/
