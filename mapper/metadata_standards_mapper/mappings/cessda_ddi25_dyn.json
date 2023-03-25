@@ -1,0 +1,132 @@
+{
+  "type": "object",
+  "title": "Swissubase to CESSDA metadata mappings",
+  "subTargetSchema": "http://www.ddialliance.org/Specification/DDI-Codebook/2.5/XMLSchema/codebook.xsd",
+  "subTargetSchemaNamespace": "ddi:codebook:2_5",
+  "subTargetSchemaNotes": "Implements a ddi codebook 2.5 subset: https://cmv.cessda.eu/profiles/cdc/ddi-2.5/1.0.4/profile.xml",
+  "subMappingsVersion": "1.0",
+  "subIdentifier": "oai_ddi25_dyn",
+  "required": ["codeBook"],
+  "properties": {
+    "codeBook": {
+      "type": "object",
+      "subNodePath": "codeBook",
+      "subNodeAttributes": [
+        {"subAttributeName": "xmlns", "subDefaultValue": "ddi:codebook:2_5"},
+        {"subAttributeName": "version", "subDefaultValue": "2.5"},
+        {"subAttributeName": "xsi:schemaLocation", "subDefaultValue": "ddi:codebook:2_5 http://www.ddialliance.org/Specification/DDI-Codebook/2.5/XMLSchema/codebook.xsd"}
+      ],
+      "required": ["stdyDscr"],
+      "properties": {
+        "datasetTitle": {
+          "$comment": "Use ISO 639-1 for language identifier",
+          "type": "object",
+          "subNodePath": "docDscr/citation/titlStmt/titl",
+          "subNodeAttributes": [
+            {"subAttributeName": "xml:lang", "subRequired":  true}
+          ],
+          "subTargetFields": {"translationsPath": "title", "languagePath": "language/code"},
+          "subCallbackMethod": ["getMainTranslation"]
+        },
+        "dataset": {
+          "type": "object",
+          "subNodePath": "stdyDscr",
+          "required": ["citation"],
+          "properties": {
+            "citation": {
+              "type": "object",
+              "subNodePath": "citation",
+              "required": ["titlStmt", "datasetURLs"],
+              "properties": {
+                "titlStmt": {
+                  "type": "object",
+                  "subNodePath": "titlStmt",
+                  "required": ["datasetTitle", "datasetDOI"],
+                  "properties": {
+                    "datasetTitle": {
+                      "$comment": "Use ISO 639-1 for language identifier",
+                      "type": "object",
+                      "subNodePath": "titl",
+                      "subNodeAttributes": [
+                        {"subAttributeName": "xml:lang", "subRequired":  true}
+                      ],
+                      "subTargetFields": {"translationsPath": "title", "languagePath": "language/code"},
+                      "subCallbackMethod": ["getMainTranslation"]
+                    },
+                    "datasetAdditionalTitles": {
+                      "$comment": "Use ISO 639-1 for language identifier",
+                      "type": "array",
+                      "subNodePath": "parTitl",
+                      "subNodeAttributes": [
+                        {"subAttributeName": "xml:lang", "subRequired":  true}
+                      ],
+                      "subTargetFields": {"translationsPath": "title", "languagePath": "language/code"},
+                      "subCallbackMethod": ["getAdditionalTranslations"],
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "internalDatasetIdentifier": {
+                      "type": "object",
+                      "subNodePath": "IDNo",
+                      "subNodeAttributes": [
+                        {"subAttributeName": "agency", "subDefaultValue": "SWISSUbase"}
+                      ],
+                      "subCallbackMethod": ["getInternalIdentifier"]
+                    },
+                    "datasetDOI": {
+                      "type": "object",
+                      "subNodePath": "IDNo",
+                      "subNodeAttributes": [
+                        {"subAttributeName": "agency", "subDefaultValue": "DOI"}
+                      ],
+                      "subTargetFields": {"fieldPath": "doi"},
+                      "subCallbackMethod": ["getFieldValue"]
+                    }
+                  }
+                },
+                "datasetURLs": {
+                  "type": "array",
+                  "subNodePath": "holdings",
+                  "subNodeAttributes": [
+                    {"subAttributeName": "URI", "subRequired": true},
+                    {"subAttributeName": "xml:lang", "subDefaultValue": "en"}
+                  ],
+                  "subTargetFields": {"fieldPath": "doi"},
+                  "subCallbackMethod": ["buildURLFromSetting", "DOI_PROXY"],
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            },
+            "methodDataColl": {
+              "type": "object",
+              "subNodePath": "method/dataColl",
+              "properties": {
+                "timeMethod": {
+                  "$comment": "Example with dynamic metadata, and voc translations",
+                  "type": "array",
+                  "subNodePath": "timeMeth",
+                  "subNodeAttributes": [
+                    {"subAttributeName": "xml:lang", "subRequired":  true}
+                  ],
+                  "subTargetFields": {"fieldPath": "dynamicMetadata"},
+                  "subTargetDynamicConfig": {"configBlockId": 1, "dynamicPath": "timeMethod"},
+                  "subCallbackMethod": ["getDynamicFieldTranslations"],
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "fileDscr": {
+          "type": "object",
+          "subNodePath": "fileDscr"
+        }
+      }
+    }
+  }
+}
