@@ -1,7 +1,7 @@
 import sys
 
-from src.mapper import SSSOMMapper
-from src.document_builder import XMLDocumentBuilder, JSONDocumentReader
+from mapper import SSSOMMapper
+from document_builder import XMLDocumentBuilder, JSONDocumentReader
 
 
 def main():
