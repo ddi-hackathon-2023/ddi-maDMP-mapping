@@ -1,4 +1,3 @@
-import json
 from abc import ABC, abstractmethod
 from typing import Dict, Optional, Any
 from xml.etree.ElementTree import SubElement, Element, ElementTree, tostring
@@ -36,15 +35,9 @@ class JSONDocumentReader(DocumentReader):
         self.json_doc_tree = pandas.read_json(file_path).to_dict(orient="dict")
         self.json_doc_flat = pandas.json_normalize(self.json_doc_tree, sep='/').to_dict(orient="records").pop()
 
-
     def get_flattened_tree(self) -> Dict[str, Any]:
-        pass
-        # df = pandas.json_normalize(self.json_doc, sep='/')
-        #
-        # return {element. for element in df.to_dict(orient="records")}
-        #
-        # print(df.to_dict(orient='records')[0])
-
+        df = pandas.json_normalize(self.json_doc_tree, sep='/')
+        return df.to_dict(orient="dict")
 
 
 class XMLDocumentBuilder(DocumentBuilder):
