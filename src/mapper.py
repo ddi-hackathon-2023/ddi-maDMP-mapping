@@ -8,6 +8,7 @@ from src.solver import cardinality_type_solver
 
 from pprint import pprint
 
+
 class SSSOMMapper:
     def __init__(self, subject_document: DocumentReader, object_document: DocumentBuilder, sssom_mapping_set_tsv: str) -> None:
         self._load_mapping_set_def(sssom_mapping_set_tsv)
@@ -36,11 +37,12 @@ class SSSOMMapper:
             value = None
             try:
                 func = cardinality_type_solver(other_field)
-                value = func(flat_subject_document[subject_id])
+                value = func(flat_subject_document[subject_id[1:]])
             except KeyError:
                 if other_field.subject_cardinality[0] != "0":
-                    raise ValueError(f"This subject path {subject_id} is mandatory in the input format!")
+                    raise ValueError(f"This subject path {subject_id} is mandatory in the input format but not present!")
                 elif other_field.object_cardinality[0] != "0":
                     raise ValueError(f"This object path {object_id} is mandatory for the output file!")
-            self.object_document.add_node_to_current_leaf(value)
+            node_name, attribute = object_id.rsplit("/", 1)
+            self.object_document.add_node_to_current_leaf(current_node_ref=None, node_name=node_name, attributes={attribute: value})
         pprint(self.object_document.get_document_as_string())

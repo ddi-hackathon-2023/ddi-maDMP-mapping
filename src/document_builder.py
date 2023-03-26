@@ -33,11 +33,23 @@ class JSONDocumentReader(DocumentReader):
 
     def __init__(self, file_path: str) -> None:
         self.json_doc_tree = pandas.read_json(file_path).to_dict(orient="dict")
-        self.json_doc_flat = pandas.json_normalize(self.json_doc_tree, sep='/').to_dict(orient="records").pop()
+        self.json_doc_flat = self._complete_tree(
+            pandas.json_normalize(self.json_doc_tree, sep='/').to_dict(orient="records").pop()
+        )
 
-    def get_flattened_tree(self) -> Dict[str, Any]:
-        df = pandas.json_normalize(self.json_doc_tree, sep='/')
-        return df.to_dict(orient="dict")
+    @staticmethod
+    def _complete_tree(tree_dict):
+        missing_entries = []
+        for key in tree_dict.keys():
+            previous = ""
+            for element in key.split("/"):
+                element = previous + "" + element
+                if element not in tree_dict.keys():
+                    missing_entries.append(element)
+                    previous = element + "/"
+        for element in missing_entries:
+            tree_dict[element] = {}
+        return tree_dict
 
 
 class XMLDocumentBuilder(DocumentBuilder):
