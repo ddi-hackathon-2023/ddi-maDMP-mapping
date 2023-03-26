@@ -1,16 +1,13 @@
-"subject_id"	"subject_cardinality"	"predicate_id"	"object_cardinality"	"object_id"	"mapping_cardinality"	"mapping_justification"	"subject_label"	"object_label"
-"/codeBook/stdyDscr/citation/titlStmt/IDNo"	"0..n"	"skos:exactMatch"	1	"/dmp/dataset/dataset_id"	"1:1"			
-"/codeBook/stdyDscr/citation/titlStmt/IDNo/text()"	"0..1"	"skos:exactMatch"	1	"/dmp/dataset/dataset_id/identifier"	"1:1"			
-"/codeBook/stdyDscr/citation/titlStmt/IDNo/@agency"	1	"skos:exactMatch"	1	"/dmp/dataset/dataset_id/type"	"1:1"			
-			1	"/dmp/dataset/personal_data"	"0:1"			
-			1	"/dmp/dataset/sensitive_data"	"0:1"			
-"/codeBook/stdyDscr/citation/titlStmt/titl"	1	"skos:exactMatch"	1	"/dmp/dataset/title"	"1:1"			
-"/codeBook/docDscr/citation/titlStmt/IDNo"	"0..n"	"skos:exactMatch"	1	"/dmp/dmp_id"	"1:1"			
-"/codeBook/docDscr/citation/titlStmt/IDNo/text()"	"0..1"	"skos:exactMatch"	1	"/dmp/dmp_id/identifier"	"1:1"			
-"/codeBook/docDscr/citation/titlStmt/IDNo/@agency"	1	"skos:exactMatch"	1	"/dmp/dmp_id/type"	"1:1"			
-"/codeBook/docDscr/citation/titlStmt/titl"	1	"skos:exactMatch"	1	"/dmp/title"	"1:1"			
-"/codeBook/docDscr/citation/distStmt/contact"	"0..n"	"skos:exactMatch"	1	"/dmp/contact"	"1:1"			
-"/codeBook/docDscr/citation/distStmt/contact@ID"	"0..1"	"skos:exactMatch"	1	"/dmp/contact/contact_id/identifier"	"1:1"			
-			1	"/dmp/contact/contact_id/type"	"0:1"			
-"/codeBook/docDscr/citation/distStmt/contact@email"	"0..1"	"skos:exactMatch"	"0..1"	"/dmp/contact/mbox"	"1:1"			
-"/codeBook/docDscr/citation/distStmt/contact/text()"	"0..1"	"skos:exactMatch"	1	"/dmp/contact/name"	"1:1"			
+subject_id		predicate_id	object_cardinality	object_id	mapping_cardinality	mapping_justification	other	object_label
+/codeBook/stdyDscr/citation/titlStmt/IDNo	0..n	skos:exactMatch	1	/dmp/dataset/dataset_id	1:1	sempv:LogicalReasoning	subject_cardinality:0..n|object_cardinality:1	
+/codeBook/stdyDscr/citation/titlStmt/IDNo/text()	0..1	skos:exactMatch	1	/dmp/dataset/dataset_id/identifier	1:1	sempv:LogicalReasoning	subject_cardinality:0..1|object_cardinality:1	
+/codeBook/stdyDscr/citation/titlStmt/IDNo/@agency	1	skos:exactMatch	1	/dmp/dataset/dataset_id/type	1:1	sempv:LogicalReasoning	subject_cardinality:1;object_cardinality:1	
+/codeBook/stdyDscr/citation/titlStmt/titl	1	skos:exactMatch	1	/dmp/dataset/title	1:1	sempv:LogicalReasoning	subject_cardinality:1;object_cardinality:1	
+/codeBook/docDscr/citation/titlStmt/IDNo	0..n	skos:exactMatch	1	/dmp/dmp_id	1:1	sempv:LogicalReasoning	subject_cardinality:0..n;object_cardinality:1	
+/codeBook/docDscr/citation/titlStmt/IDNo/text()	0..1	skos:exactMatch	1	/dmp/dmp_id/identifier	1:1	sempv:LogicalReasoning	subject_cardinality:0..1|object_cardinality:1	
+/codeBook/docDscr/citation/titlStmt/IDNo/@agency	1	skos:exactMatch	1	/dmp/dmp_id/type	1:1	sempv:LogicalReasoning	subject_cardinality:1|object_cardinality:1	
+/codeBook/docDscr/citation/titlStmt/titl	1	skos:exactMatch	1	/dmp/title	1:1	sempv:LogicalReasoning	subject_cardinality:1|object_cardinality:1	
+/codeBook/docDscr/citation/distStmt/contact	0..n	skos:exactMatch	1	/dmp/contact	1:1	sempv:LogicalReasoning	subject_cardinality:0..n|object_cardinality:1	
+/codeBook/docDscr/citation/distStmt/contact@ID	0..1	skos:exactMatch	1	/dmp/contact/contact_id/identifier	1:1	sempv:LogicalReasoning	subject_cardinality:0..1|object_cardinality:1	
+/codeBook/docDscr/citation/distStmt/contact@email	0..1	skos:exactMatch	0..1	/dmp/contact/mbox	1:1	sempv:LogicalReasoning	subject_cardinality:0..1|object_cardinality:0..1	
+/codeBook/docDscr/citation/distStmt/contact/text()	0..1	skos:exactMatch	1	/dmp/contact/name	1:1	sempv:LogicalReasoning	subject_cardinality:0..1|object_cardinality:1	

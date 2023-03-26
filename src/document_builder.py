@@ -1,11 +1,18 @@
+import json
 from abc import ABC, abstractmethod
 from typing import Dict, Optional, Any
 from xml.etree.ElementTree import SubElement, Element, ElementTree, tostring
+
+import pandas
 
 
 class DocumentBuilder(ABC):
     @abstractmethod
     def add_node_to_current_leaf(self, current_node_ref: Optional[Element], node_name: str, attributes: Dict[str, str], value: Optional[Any]=None, is_raw: bool = False) -> Element:
+        pass
+
+    @abstractmethod
+    def add_node_to_current_leaf(self, current_node_ref: Optional[Element], node_name: str, attributes: Dict[str, str], value: Optional[Any] = None, is_raw: bool = False) -> Element:
         pass
 
     @abstractmethod
@@ -17,9 +24,32 @@ class DocumentBuilder(ABC):
         pass
 
 
+class DocumentReader(ABC):
+    @abstractmethod
+    def get_flattened_tree(self) -> Dict[str, Any]:
+        pass
+
+
+class JSONDocumentReader(DocumentReader):
+
+    def __init__(self, file_path: str) -> None:
+        self.json_doc_tree = pandas.read_json(file_path).to_dict(orient="dict")
+        self.json_doc_flat = pandas.json_normalize(self.json_doc_tree, sep='/').to_dict(orient="records").pop()
+
+
+    def get_flattened_tree(self) -> Dict[str, Any]:
+        pass
+        # df = pandas.json_normalize(self.json_doc, sep='/')
+        #
+        # return {element. for element in df.to_dict(orient="records")}
+        #
+        # print(df.to_dict(orient='records')[0])
+
+
+
 class XMLDocumentBuilder(DocumentBuilder):
 
-    def __init__(self, encoding: str, with_xml_declaration: bool = False) -> None:
+    def __init__(self, file_path: str, encoding: str, with_xml_declaration: bool = False) -> None:
         self.encoding: str = encoding
         self.with_xml_declaration: bool = with_xml_declaration
         self.et: Optional[ElementTree] = None
