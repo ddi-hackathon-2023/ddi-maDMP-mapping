@@ -1,17 +1,7 @@
 import sys
-from itertools import combinations_with_replacement, product
-from pathlib import Path
 
-from mapper import SSSOMMapper
+from src.mapper import SSSOMMapper
 from src.document_builder import XMLDocumentBuilder, JSONDocumentReader
-
-def get_combi():
-    cardinalities = ["0..1", "1", "0..n", "1..n", "n..n"]
-    types = ["literal", "voc", "object", "list"]
-
-    cardinalities_combos = list(combinations_with_replacement(cardinalities, 2))
-    types_combos = list(combinations_with_replacement(types, 2))
-    return [[(c_1, t_1, c_2, t_2) for t_1, t_2 in types_combos] for c_1, c_2 in cardinalities_combos ]
 
 
 def main():
@@ -23,7 +13,6 @@ def main():
     input_mapping_tsv = "mapping_definitions/dmp-ddi25_mapping.tsv"
     output_file_path = "mapping_definitions/output.xml"
 
-    print(get_combi())
 
     # hardcoded for now, could be chosen by suffix / config
     ddi25_document_output = XMLDocumentBuilder(output_file_path, "UTF-8", True)
@@ -31,6 +20,7 @@ def main():
 
     mapper = SSSOMMapper(dmp_document_input, ddi25_document_output, input_mapping_tsv)
     mapper.convert()
+
 
 if __name__ == "__main__":
     main()
