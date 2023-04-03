@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Dict, Optional, Any
-from xml.etree.ElementTree import SubElement, Element, ElementTree, tostring
+from lxml.etree import SubElement, Element, ElementTree, tostring
 
 import pandas
 
@@ -64,7 +64,7 @@ class XMLDocumentBuilder(DocumentBuilder):
                 self.root_node = current_node_ref
                 self.et = ElementTree(self.root_node)
 
-        else:
+        elif node_name:
             current_node_ref = SubElement(current_node_ref, node_name, attrib=attributes)
         if is_raw:
             current_node_ref.append(value)
@@ -83,7 +83,7 @@ class XMLDocumentBuilder(DocumentBuilder):
     def find(self, full_xpath) -> Optional[Element]:
         # TODO: extend to be able to handle namespaces also
         search_path = full_xpath.strip("/").replace("/text()", "").split("@").pop(0)
-        if not self.root_node:
+        if self.root_node is None:
             return None, search_path
         root_tag = self.root_node.tag
         # remove start and end slashes text and attributes from node path

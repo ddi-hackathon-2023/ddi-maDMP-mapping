@@ -45,7 +45,7 @@ class SSSOMMapper:
             subject_value = recursive_subject_reader(flat_subject_document, subject_path)
 
             current_node, object_path = self.object_document.find(object_id)
-            if current_node is None or object_path is not "":
+            if current_node is None or not object_path:
                 current_node = self.object_document.get_document_as_raw()
                 for node_name in object_path.split("/"):
                     current_node = self.object_document.add_node_to_current_leaf(
@@ -59,10 +59,10 @@ class SSSOMMapper:
                     self.object_document.set_value_of_current_leaf(current_node, subject_value)
 
             # TODO: remove this, dev help
-            try:
-                pprint(self.object_document.get_document_as_string())
-            except:
-                pass
+            # try:
+            #     pprint(self.object_document.get_document_as_string())
+            # except:
+            #     pass
 
 
 def recursive_subject_reader(flat_subject_document, subject_path, current_index=0):

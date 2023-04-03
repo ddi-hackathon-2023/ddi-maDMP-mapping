@@ -1,5 +1,6 @@
 import sys
 
+from lxml.etree import tostring
 from mapper import SSSOMMapper
 from document_builder import XMLDocumentBuilder, JSONDocumentReader
 
@@ -20,6 +21,8 @@ def main():
 
     mapper = SSSOMMapper(dmp_document_input, ddi25_document_output, input_mapping_tsv)
     mapper.convert()
+    output = mapper.object_document.et
+    print(tostring(output, pretty_print=True, encoding='unicode'))
 
 
 if __name__ == "__main__":
