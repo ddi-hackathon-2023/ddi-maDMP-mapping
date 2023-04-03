@@ -58,13 +58,6 @@ class SSSOMMapper:
                 elif object_id.endswith("/text()"):
                     self.object_document.set_value_of_current_leaf(current_node, subject_value)
 
-            # TODO: remove this, dev help
-            try:
-                print(self.object_document.get_document_as_string())
-                print()
-            except:
-                pass
-
 
 def recursive_subject_reader(flat_subject_document, subject_path, current_index=0):
     if subject_path in flat_subject_document:
