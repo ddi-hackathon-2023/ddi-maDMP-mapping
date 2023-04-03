@@ -20,6 +20,7 @@ def main():
 
     mapper = SSSOMMapper(dmp_document_input, ddi25_document_output, input_mapping_tsv)
     mapper.convert()
+    print(mapper.object_document.get_document_as_string())
 
 
 if __name__ == "__main__":

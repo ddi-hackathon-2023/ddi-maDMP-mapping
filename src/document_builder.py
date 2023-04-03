@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Dict, Optional, Any
 from xml.etree.ElementTree import SubElement, Element, ElementTree, tostring
+from xml.dom import minidom
 
 import pandas
 
@@ -53,7 +54,8 @@ class XMLDocumentBuilder(DocumentBuilder):
         self.root_node: Optional[Element] = None
 
     def get_document_as_string(self) -> str:
-        return tostring(self.root_node, "unicode", method="xml", xml_declaration=self.with_xml_declaration)  # type: ignore
+        xml_string = tostring(self.root_node, "unicode", method="xml", xml_declaration=self.with_xml_declaration)
+        return minidom.parseString(xml_string).toprettyxml(indent="   ")
 
     def get_document_as_raw(self) -> Optional[Element]:
         return self.root_node

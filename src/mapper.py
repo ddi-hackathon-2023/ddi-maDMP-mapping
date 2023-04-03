@@ -60,7 +60,8 @@ class SSSOMMapper:
 
             # TODO: remove this, dev help
             try:
-                pprint(self.object_document.get_document_as_string())
+                print(self.object_document.get_document_as_string())
+                print()
             except:
                 pass
 
